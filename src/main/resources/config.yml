@@ -1,13 +1,3 @@
-# Response message for /example ping.
-# Supports MiniMessage formatting: https://docs.advntr.dev/minimessage/format.html
-pong-message: "Pong!"
-
-# Response message for /example greet <player>.
-# Use {player} as a placeholder for the target player's name.
-# Supports MiniMessage formatting: https://docs.advntr.dev/minimessage/format.html
-greet-message: "Hello, {player}!"
-
-# Response message for /example creepersKilled.
-# Use {count} as a placeholder for the sender's creeper-kill count.
-# Supports MiniMessage formatting: https://docs.advntr.dev/minimessage/format.html
-creepers-killed-message: "You have killed {count} creeper(s)!"
+# If true (default), only deaths caused directly by another player count toward %personal_deaths%.
+# Set to false to count all deaths (fall damage, mobs, etc.).
+pvp-deaths-only: true

@@ -11,7 +11,7 @@ plugins {
     java
 }
 
-group = "com.crimsonwarpedcraft.exampleplugin"
+group = "com.crimsonwarpedcraft.playerkillplugin"
 
 fun getTime(): String {
     val sdf = SimpleDateFormat("yyMMdd-HHmm")
@@ -27,7 +27,7 @@ version = (if (!hasProperty("ver")) {
     if (ver.startsWith("v") && !ver.lowercase().contains("-rc-")) base else "$base-SNAPSHOT"
 }).uppercase()
 
-java.toolchain.languageVersion = JavaLanguageVersion.of(25)
+java.toolchain.languageVersion = JavaLanguageVersion.of(26)
 
 repositories {
     maven {
@@ -57,6 +57,14 @@ repositories {
             includeGroup("com.github.CrimsonWarpedcraft")
         }
     }
+
+    maven {
+        name = "placeholderapi"
+        url = uri("https://repo.extendedclip.com/content/repositories/placeholderapi/")
+        content {
+            includeGroup("me.clip")
+        }
+    }
 }
 
 val mockitoAgent = configurations.create("mockitoAgent")
@@ -72,11 +80,13 @@ dependencies {
     testImplementation("org.junit.jupiter:junit-jupiter:6.1.0")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher:6.1.0")
 
-    // Example dependencies. Paper plugins do not require these libraries.
+    compileOnly("me.clip:placeholderapi:2.11.6")
+    testImplementation("me.clip:placeholderapi:2.11.6")
+
+    // Shaded dependencies bundled into the plugin jar.
     implementation("com.github.CrimsonWarpedcraft:cw-commons:v0.1.1")
     // PluginConfig imports annotations from Jackson and Hibernate Validator directly.
     implementation("com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.22.0")
-    implementation("dev.jorel:commandapi-paper-shade:11.2.0")
     implementation("org.hibernate.validator:hibernate-validator:9.1.1.Final")
 
     testImplementation("org.mockito:mockito-core:5.23.0")
@@ -125,7 +135,6 @@ tasks.withType<SpotBugsTask>().configureEach {
 val shadowJar = tasks.named<ShadowJar>("shadowJar") {
     archiveClassifier.set("")
     mergeServiceFiles()
-    relocate("dev.jorel.commandapi", "${project.group}.commandapi")
     relocate("com.fasterxml", "${project.group}.fasterxml")
     relocate("org.yaml.snakeyaml", "${project.group}.snakeyaml")
     relocate("org.hibernate.validator", "${project.group}.hibernatevalidator")
@@ -133,7 +142,6 @@ val shadowJar = tasks.named<ShadowJar>("shadowJar") {
     relocate("org.jboss.logging", "${project.group}.jbosslogging")
     // These libs load classes via reflection or SPI and must not be minimized
     minimize {
-        exclude(dependency("dev.jorel:commandapi-paper-shade:.*"))
         exclude(dependency("com.fasterxml.jackson.core:.*:.*"))
         exclude(dependency("com.fasterxml.jackson.dataformat:.*:.*"))
         exclude(dependency("com.fasterxml:classmate:.*"))
