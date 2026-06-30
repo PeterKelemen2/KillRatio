@@ -1,4 +1,4 @@
-package com.crimsonwarpedcraft.playerkillplugin.config;
+package hu.petidev.config;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;

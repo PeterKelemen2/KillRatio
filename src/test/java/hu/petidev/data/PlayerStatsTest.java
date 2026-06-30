@@ -1,4 +1,4 @@
-package com.crimsonwarpedcraft.playerkillplugin.data;
+package hu.petidev.data;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 

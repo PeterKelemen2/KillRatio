@@ -1,4 +1,4 @@
-package com.crimsonwarpedcraft.playerkillplugin.placeholder;
+package hu.petidev.placeholder;
 
 /** Defines the stat dimension used to rank players on the leaderboard. */
 public enum LeaderboardType {

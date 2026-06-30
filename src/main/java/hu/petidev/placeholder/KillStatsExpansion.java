@@ -1,7 +1,7 @@
-package com.crimsonwarpedcraft.playerkillplugin.placeholder;
+package hu.petidev.placeholder;
 
-import com.crimsonwarpedcraft.playerkillplugin.data.PlayerStats;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+import hu.petidev.data.PlayerStats;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 import me.clip.placeholderapi.expansion.PlaceholderExpansion;
@@ -32,7 +32,7 @@ public class KillStatsExpansion extends PlaceholderExpansion {
 
   @Override
   public String getAuthor() {
-    return "PlayerKillPlugin";
+    return "KillRatio";
   }
 
   @Override

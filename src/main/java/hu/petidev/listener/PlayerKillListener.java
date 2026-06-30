@@ -1,7 +1,7 @@
-package com.crimsonwarpedcraft.playerkillplugin.listener;
+package hu.petidev.listener;
 
-import com.crimsonwarpedcraft.playerkillplugin.data.PlayerStats;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+import hu.petidev.data.PlayerStats;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 import org.bukkit.entity.Player;

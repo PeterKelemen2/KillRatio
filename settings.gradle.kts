@@ -1,1 +1,1 @@
-rootProject.name = "PlayerKillPlugin"
+rootProject.name = "KillRatio"

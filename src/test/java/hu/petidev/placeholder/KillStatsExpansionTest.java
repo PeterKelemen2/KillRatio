@@ -1,11 +1,11 @@
-package com.crimsonwarpedcraft.playerkillplugin.placeholder;
+package hu.petidev.placeholder;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-import com.crimsonwarpedcraft.playerkillplugin.data.PlayerStats;
+import hu.petidev.data.PlayerStats;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 import org.bukkit.OfflinePlayer;

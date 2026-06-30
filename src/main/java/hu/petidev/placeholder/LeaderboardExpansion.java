@@ -1,7 +1,7 @@
-package com.crimsonwarpedcraft.playerkillplugin.placeholder;
+package hu.petidev.placeholder;
 
-import com.crimsonwarpedcraft.playerkillplugin.data.PlayerStats;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+import hu.petidev.data.PlayerStats;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -51,7 +51,7 @@ public class LeaderboardExpansion extends PlaceholderExpansion {
 
   @Override
   public String getAuthor() {
-    return "PlayerKillPlugin";
+    return "KillRatio";
   }
 
   @Override

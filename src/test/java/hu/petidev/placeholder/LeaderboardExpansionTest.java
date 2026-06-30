@@ -1,11 +1,11 @@
-package com.crimsonwarpedcraft.playerkillplugin.placeholder;
+package hu.petidev.placeholder;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import com.crimsonwarpedcraft.playerkillplugin.data.PlayerStats;
+import hu.petidev.data.PlayerStats;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;

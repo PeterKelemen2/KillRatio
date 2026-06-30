@@ -11,7 +11,7 @@ plugins {
     java
 }
 
-group = "com.crimsonwarpedcraft.playerkillplugin"
+group = "hu.petidev"
 
 fun getTime(): String {
     val sdf = SimpleDateFormat("yyMMdd-HHmm")

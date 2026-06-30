@@ -1,6 +1,6 @@
-package com.crimsonwarpedcraft.playerkillplugin.store;
+package hu.petidev.store;
 
-import com.crimsonwarpedcraft.playerkillplugin.data.PlayerStats;
+import hu.petidev.data.PlayerStats;
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;

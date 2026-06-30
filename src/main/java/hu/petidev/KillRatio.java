@@ -1,12 +1,12 @@
-package com.crimsonwarpedcraft.playerkillplugin;
+package hu.petidev;
 
-import com.crimsonwarpedcraft.playerkillplugin.config.PluginConfig;
-import com.crimsonwarpedcraft.playerkillplugin.data.PlayerStats;
-import com.crimsonwarpedcraft.playerkillplugin.listener.PlayerKillListener;
-import com.crimsonwarpedcraft.playerkillplugin.placeholder.KillStatsExpansion;
-import com.crimsonwarpedcraft.playerkillplugin.placeholder.LeaderboardExpansion;
-import com.crimsonwarpedcraft.playerkillplugin.placeholder.LeaderboardType;
-import com.crimsonwarpedcraft.playerkillplugin.store.StatsStore;
+import hu.petidev.config.PluginConfig;
+import hu.petidev.data.PlayerStats;
+import hu.petidev.listener.PlayerKillListener;
+import hu.petidev.placeholder.KillStatsExpansion;
+import hu.petidev.placeholder.LeaderboardExpansion;
+import hu.petidev.placeholder.LeaderboardType;
+import hu.petidev.store.StatsStore;
 import java.io.IOException;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
@@ -18,7 +18,7 @@ import org.bukkit.scheduler.BukkitTask;
 /**
  * Tracks per-player PvP kill and death statistics and exposes them via PlaceholderAPI.
  */
-public class PlayerKillPlugin extends JavaPlugin {
+public class KillRatio extends JavaPlugin {
 
   private StatsStore statsStore;
   private BukkitTask autoSaveTask;

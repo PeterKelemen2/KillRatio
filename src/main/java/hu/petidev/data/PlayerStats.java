@@ -1,4 +1,4 @@
-package com.crimsonwarpedcraft.playerkillplugin.data;
+package hu.petidev.data;
 
 /**
  * Holds per-player PvP kill and death statistics.

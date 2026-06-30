@@ -1,4 +1,4 @@
-package com.crimsonwarpedcraft.playerkillplugin.config;
+package hu.petidev.config;
 
 import org.bukkit.configuration.file.FileConfiguration;
 
