@@ -51,7 +51,7 @@ public class KillRatio extends JavaPlugin {
       };
       new KillStatsExpansion(statsCache).register();
       new LeaderboardExpansion(
-          "killed", LeaderboardType.KILLS, statsCache, nameResolver).register();
+          "kills", LeaderboardType.KILLS, statsCache, nameResolver).register();
       new LeaderboardExpansion(
           "kd", LeaderboardType.KD, statsCache, nameResolver).register();
       new LeaderboardExpansion(
