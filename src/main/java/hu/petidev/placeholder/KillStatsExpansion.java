@@ -8,8 +8,8 @@ import me.clip.placeholderapi.expansion.PlaceholderExpansion;
 import org.bukkit.OfflinePlayer;
 
 /**
- * Provides {@code %personal_kills%}, {@code %personal_deaths%}, and {@code %personal_kd%}
- * placeholders via PlaceholderAPI.
+ * Provides {@code %personal_kills%}, {@code %personal_deaths%}, {@code %personal_kd%}, and their
+ * {@code _rank} counterparts ({@code %personal_kills_rank%}, etc.) via PlaceholderAPI.
  */
 public class KillStatsExpansion extends PlaceholderExpansion {
 
@@ -62,11 +62,15 @@ public class KillStatsExpansion extends PlaceholderExpansion {
     if (player == null) {
       return "";
     }
-    PlayerStats stats = statsCache.getOrDefault(player.getUniqueId(), new PlayerStats());
+    UUID uuid = player.getUniqueId();
+    PlayerStats stats = statsCache.getOrDefault(uuid, new PlayerStats());
     return switch (params) {
       case "kills" -> String.valueOf(stats.getKills());
       case "deaths" -> String.valueOf(stats.getDeaths());
       case "kd" -> stats.getKd();
+      case "kills_rank" -> String.valueOf(LeaderboardType.KILLS.rankOf(uuid, statsCache));
+      case "deaths_rank" -> String.valueOf(LeaderboardType.DEATHS.rankOf(uuid, statsCache));
+      case "kd_rank" -> String.valueOf(LeaderboardType.KD.rankOf(uuid, statsCache));
       default -> null;
     };
   }

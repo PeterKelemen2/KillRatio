@@ -36,6 +36,11 @@ These are per-player and resolve to the stats of the player requesting the place
 | `%personal_kills%` | Total player kills |
 | `%personal_deaths%` | Total deaths (PvP-only by default, see config) |
 | `%personal_kd%` | K/D ratio formatted to 2 decimal places; shows raw kill count when deaths = 0 |
+| `%personal_kills_rank%` | The player's own 1-indexed rank on the kills leaderboard |
+| `%personal_deaths_rank%` | The player's own 1-indexed rank on the deaths leaderboard |
+| `%personal_kd_rank%` | The player's own 1-indexed rank on the K/D leaderboard |
+
+Players tied on a stat share the same rank (e.g. two players tied for the most kills are both rank 1).
 
 ---
 

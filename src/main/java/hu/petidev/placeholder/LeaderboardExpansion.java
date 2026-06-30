@@ -109,37 +109,21 @@ public class LeaderboardExpansion extends PlaceholderExpansion {
   }
 
   private String valueAt(List<Map.Entry<UUID, PlayerStats>> sorted, int rank) {
-    return rank < 1 || rank > sorted.size() ? "" : formatValue(sorted.get(rank - 1).getValue());
+    return rank < 1 || rank > sorted.size()
+        ? ""
+        : type.format(sorted.get(rank - 1).getValue());
   }
 
   private List<Map.Entry<UUID, PlayerStats>> getSortedEntries() {
     return statsCache.entrySet().stream()
-        .sorted((a, b) -> Double.compare(statValue(b.getValue()), statValue(a.getValue())))
+        .sorted((a, b) -> Double.compare(type.value(b.getValue()), type.value(a.getValue())))
         .collect(Collectors.toList());
-  }
-
-  private double statValue(PlayerStats stats) {
-    return switch (type) {
-      case KILLS -> stats.getKills();
-      case DEATHS -> stats.getDeaths();
-      case KD -> stats.getDeaths() == 0
-          ? stats.getKills()
-          : (double) stats.getKills() / stats.getDeaths();
-    };
-  }
-
-  private String formatValue(PlayerStats stats) {
-    return switch (type) {
-      case KILLS -> String.valueOf(stats.getKills());
-      case DEATHS -> String.valueOf(stats.getDeaths());
-      case KD -> stats.getKd();
-    };
   }
 
   private String formatTopList(List<Map.Entry<UUID, PlayerStats>> sorted, int limit) {
     return sorted.stream()
         .limit(limit)
-        .map(e -> nameResolver.apply(e.getKey()) + " - " + formatValue(e.getValue()))
+        .map(e -> nameResolver.apply(e.getKey()) + " - " + type.format(e.getValue()))
         .collect(Collectors.joining("\n"));
   }
 }
