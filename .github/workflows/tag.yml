@@ -21,7 +21,7 @@ jobs:
           cache: gradle
 
       - name: Build
-        run: ./gradlew release -Pver=${{ github.ref_name }}
+        run: ./gradlew build -Pver=${{ github.ref_name }}
 
       - name: Create draft release
         uses: softprops/action-gh-release@v2
