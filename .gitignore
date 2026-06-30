@@ -1,6 +1,7 @@
 .gradle
 build
 *.class
+bin
 
 # Log file
 *.log

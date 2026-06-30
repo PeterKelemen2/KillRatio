@@ -128,7 +128,79 @@ class LeaderboardExpansionTest {
   }
 
   @Test
+  void topRankNameReturnsThatRanksPlayerOnly() {
+    UUID a = UUID.randomUUID();
+    addPlayer(a, "First", 50, 1);
+    UUID b = UUID.randomUUID();
+    addPlayer(b, "Second", 30, 2);
+    UUID c = UUID.randomUUID();
+    addPlayer(c, "Third", 10, 3);
+
+    assertEquals("Second",
+        expansion("kill", LeaderboardType.KILLS).onRequest(null, "top_2_name"));
+  }
+
+  @Test
+  void topRankValueReturnsThatRanksValueOnly() {
+    UUID a = UUID.randomUUID();
+    addPlayer(a, "First", 50, 1);
+    UUID b = UUID.randomUUID();
+    addPlayer(b, "Second", 30, 2);
+
+    assertEquals("30",
+        expansion("kill", LeaderboardType.KILLS).onRequest(null, "top_2_value"));
+  }
+
+  @Test
+  void topRank1NameIsAliasForTopName() {
+    UUID a = UUID.randomUUID();
+    addPlayer(a, "Leader", 50, 1);
+
+    assertEquals(
+        expansion("kill", LeaderboardType.KILLS).onRequest(null, "top_name"),
+        expansion("kill", LeaderboardType.KILLS).onRequest(null, "top_1_name"));
+  }
+
+  @Test
+  void topRankNameBeyondAvailablePlayersReturnsEmptyString() {
+    addPlayer(UUID.randomUUID(), "Only", 5, 1);
+
+    assertEquals("", expansion("kill", LeaderboardType.KILLS).onRequest(null, "top_5_name"));
+  }
+
+  @Test
+  void topRankValueBeyondAvailablePlayersReturnsEmptyString() {
+    addPlayer(UUID.randomUUID(), "Only", 5, 1);
+
+    assertEquals("", expansion("kill", LeaderboardType.KILLS).onRequest(null, "top_5_value"));
+  }
+
+  @Test
+  void topRankZeroReturnsEmptyString() {
+    addPlayer(UUID.randomUUID(), "Only", 5, 1);
+
+    assertEquals("", expansion("kill", LeaderboardType.KILLS).onRequest(null, "top_0_name"));
+    assertEquals("", expansion("kill", LeaderboardType.KILLS).onRequest(null, "top_0"));
+  }
+
+  @Test
+  void topRankWithFewerPlayersThanRequestedReturnsAllAvailable() {
+    addPlayer(UUID.randomUUID(), "A", 3, 1);
+    addPlayer(UUID.randomUUID(), "B", 1, 2);
+
+    String result = expansion("killed", LeaderboardType.KILLS).onRequest(null, "top_5");
+    assertNotNull(result);
+
+    assertEquals(2, result.split("\n").length);
+  }
+
+  @Test
   void unknownParamReturnsNull() {
     assertNull(expansion("killed", LeaderboardType.KILLS).onRequest(null, "bogus"));
+  }
+
+  @Test
+  void nonNumericRankReturnsNull() {
+    assertNull(expansion("killed", LeaderboardType.KILLS).onRequest(null, "top_abc_name"));
   }
 }

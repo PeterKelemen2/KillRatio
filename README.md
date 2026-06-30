@@ -55,17 +55,23 @@ Each leaderboard placeholder follows the pattern `%<identifier>_<query>%`.
 
 | Query | Returns |
 |---|---|
-| `top_10` | Newline-separated list of the top 10 players and their stat value |
-| `top_name` | Display name of the #1 player |
-| `top_value` | Stat value of the #1 player |
+| `top_<n>` | Newline-separated list of the top `n` players and their stat value (e.g. `top_5`) |
+| `top_<n>_name` | Display name of the player ranked `n` only — not a list (e.g. `top_2_name` → just the #2 player's name) |
+| `top_<n>_value` | Stat value of the player ranked `n` only |
+| `top_name` / `top_value` | Aliases for `top_1_name` / `top_1_value` |
+
+Out-of-range ranks (e.g. `top_5_name` when fewer than 5 players are tracked) resolve to an empty string.
+
+`top_<n>_name` / `top_<n>_value` are intended for building custom leaderboard layouts (signs, scoreboards, GUIs) by placing one placeholder per rank, e.g. `%kills_top_1_name%`, `%kills_top_2_name%`, `%kills_top_3_name%`, ...
 
 **Examples**
 
 | Placeholder | Description |
 |---|---|
 | `%kills_top_10%` | Top 10 players by kill count |
-| `%kills_top_name%` | Name of the player with the most kills |
-| `%kills_top_value%` | Kill count of the #1 killer |
+| `%kills_top_5%` | Top 5 players by kill count |
+| `%kills_top_2_name%` | Name of the player ranked #2 by kills |
+| `%kills_top_2_value%` | Kill count of the player ranked #2 |
 | `%kd_top_10%` | Top 10 players by K/D ratio |
 | `%kd_top_name%` | Name of the player with the highest K/D |
 | `%kd_top_value%` | K/D ratio of the #1 player |

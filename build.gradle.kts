@@ -90,6 +90,9 @@ tasks.test {
 }
 
 tasks.processResources {
+    inputs.property("name", rootProject.name)
+    inputs.property("pluginVersion", version)
+    inputs.property("packageName", project.group)
     filesMatching("**/plugin.yml") {
         expand(mapOf("NAME" to rootProject.name, "VERSION" to version, "PACKAGE" to project.group))
     }

@@ -7,6 +7,8 @@ import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Function;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import me.clip.placeholderapi.expansion.PlaceholderExpansion;
 import org.bukkit.OfflinePlayer;
@@ -17,7 +19,7 @@ import org.bukkit.OfflinePlayer;
  */
 public class LeaderboardExpansion extends PlaceholderExpansion {
 
-  private static final int TOP_SIZE = 10;
+  private static final Pattern TOP_PATTERN = Pattern.compile("^top_(\\d+)(?:_(name|value))?$");
 
   private final String identifier;
   private final LeaderboardType type;
@@ -70,21 +72,44 @@ public class LeaderboardExpansion extends PlaceholderExpansion {
   }
 
   /**
-   * Resolves leaderboard placeholder values.
+   * Resolves leaderboard placeholder values. Supports {@code top_<n>} for a list of the top
+   * {@code n} players, and {@code top_<n>_name} / {@code top_<n>_value} for the single name or
+   * stat value of whichever player is ranked exactly {@code n} (1-indexed). {@code top_name} and
+   * {@code top_value} remain as aliases for rank 1.
    *
    * @param player unused — leaderboard queries are not player-specific
-   * @param params the placeholder name after the identifier (e.g. {@code "top_10"})
+   * @param params the placeholder name after the identifier (e.g. {@code "top_2_name"})
    * @return the resolved string, or null if the placeholder is unknown
    */
   @Override
   public String onRequest(OfflinePlayer player, String params) {
     List<Map.Entry<UUID, PlayerStats>> sorted = getSortedEntries();
-    return switch (params) {
-      case "top_10" -> formatTopList(sorted);
-      case "top_name" -> sorted.isEmpty() ? "" : nameResolver.apply(sorted.get(0).getKey());
-      case "top_value" -> sorted.isEmpty() ? "" : formatValue(sorted.get(0).getValue());
-      default -> null;
-    };
+    if ("top_name".equals(params)) {
+      return nameAt(sorted, 1);
+    }
+    if ("top_value".equals(params)) {
+      return valueAt(sorted, 1);
+    }
+    Matcher matcher = TOP_PATTERN.matcher(params);
+    if (!matcher.matches()) {
+      return null;
+    }
+    int rank = Integer.parseInt(matcher.group(1));
+    String field = matcher.group(2);
+    if (field == null) {
+      return formatTopList(sorted, rank);
+    }
+    return "name".equals(field) ? nameAt(sorted, rank) : valueAt(sorted, rank);
+  }
+
+  private String nameAt(List<Map.Entry<UUID, PlayerStats>> sorted, int rank) {
+    return rank < 1 || rank > sorted.size()
+        ? ""
+        : nameResolver.apply(sorted.get(rank - 1).getKey());
+  }
+
+  private String valueAt(List<Map.Entry<UUID, PlayerStats>> sorted, int rank) {
+    return rank < 1 || rank > sorted.size() ? "" : formatValue(sorted.get(rank - 1).getValue());
   }
 
   private List<Map.Entry<UUID, PlayerStats>> getSortedEntries() {
@@ -111,9 +136,9 @@ public class LeaderboardExpansion extends PlaceholderExpansion {
     };
   }
 
-  private String formatTopList(List<Map.Entry<UUID, PlayerStats>> sorted) {
+  private String formatTopList(List<Map.Entry<UUID, PlayerStats>> sorted, int limit) {
     return sorted.stream()
-        .limit(TOP_SIZE)
+        .limit(limit)
         .map(e -> nameResolver.apply(e.getKey()) + " - " + formatValue(e.getValue()))
         .collect(Collectors.joining("\n"));
   }
